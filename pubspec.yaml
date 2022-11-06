@@ -2,6 +2,7 @@ name: f_yc_storages
 description: A new Flutter package project.
 version: 0.0.1
 homepage:
+publish_to: none
 
 environment:
   sdk: '>=2.18.2 <3.0.0'
@@ -10,6 +11,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  get_storage: ^2.0.3
+  f_yc_config:
+    git: https://github.com/yhfworking/f_yc_config.git
+  f_yc_entity:
+    git: https://github.com/yhfworking/f_yc_entity.git
 
 dev_dependencies:
   flutter_test:
