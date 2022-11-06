@@ -7,19 +7,13 @@ import 'package:get_storage/get_storage.dart';
 
 /// 初始化
 class FYcStorages {
-  static final FYcStorages _instance = FYcStorages._();
-
-  static FYcStorages get instance => FYcStorages();
-
-  factory FYcStorages() => _instance;
-
   static FYcConfigStoragesConfig apiConfig = FYcConfigConfigurator.instance
       .getConfig(configId: KIT_CONFIG_ID)
       .storagesConfig;
-
-  FYcStorages._() {
-    GetStorage.init().then((value) => {});
+  static initializer() async {
+    await GetStorage.init();
   }
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   core.bool checkLogin() {
     core.String userToken = this.userToken();
