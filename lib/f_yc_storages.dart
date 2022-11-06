@@ -20,6 +20,35 @@ class FYcStorages {
   FYcStorages._() {
     GetStorage.init().then((value) => {});
   }
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  core.bool checkLogin() {
+    core.String userToken = this.userToken();
+    core.int userTokenExpired = this.userTokenExpired();
+    if (userToken.isNotEmpty && userTokenExpired != 0) {
+      if (core.DateTime.now().millisecondsSinceEpoch < userTokenExpired) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  void cleanAllLoginInfo() async {
+    if (apiConfig.userTokenKey.isNotEmpty) {
+      await GetStorage().remove(apiConfig.userTokenKey);
+    }
+    if (apiConfig.userTokenExpiredKey.isNotEmpty) {
+      await GetStorage().remove(apiConfig.userTokenExpiredKey);
+    }
+    if (apiConfig.userInfoKey.isNotEmpty) {
+      await GetStorage().remove(apiConfig.userInfoKey);
+    }
+    if (apiConfig.walletInfoKey.isNotEmpty) {
+      await GetStorage().remove(apiConfig.walletInfoKey);
+    }
+    if (apiConfig.behaviorInfoKey.isNotEmpty) {
+      await GetStorage().remove(apiConfig.behaviorInfoKey);
+    }
+  }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   void setUserToken(core.String userToken) async {
