@@ -15,9 +15,9 @@ class FYcStorages {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  core.bool checkLogin() {
-    core.String userToken = this.userToken();
-    core.int userTokenExpired = this.userTokenExpired();
+  static core.bool checkLogin() {
+    core.String userToken = FYcStorages.userToken();
+    core.int userTokenExpired = FYcStorages.userTokenExpired();
     if (userToken.isNotEmpty && userTokenExpired != 0) {
       if (core.DateTime.now().millisecondsSinceEpoch < userTokenExpired) {
         return true;
@@ -26,7 +26,7 @@ class FYcStorages {
     return false;
   }
 
-  void cleanAllLoginInfo() async {
+  static void cleanAllLoginInfo() async {
     if (apiConfig.userTokenKey.isNotEmpty) {
       await GetStorage().remove(apiConfig.userTokenKey);
     }
@@ -45,26 +45,26 @@ class FYcStorages {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  void setUserToken(core.String userToken) async {
+  static void setUserToken(core.String userToken) async {
     if (apiConfig.userTokenKey.isNotEmpty) {
       await GetStorage().write(apiConfig.userTokenKey, userToken);
     }
   }
 
-  core.String userToken() {
+  static core.String userToken() {
     if (apiConfig.userTokenKey.isNotEmpty) {
       return GetStorage().read(apiConfig.userTokenKey) ?? "";
     }
     return "";
   }
 
-  void setUserTokenExpired(core.int userTokenExpired) async {
+  static void setUserTokenExpired(core.int userTokenExpired) async {
     if (apiConfig.userTokenExpiredKey.isNotEmpty) {
       await GetStorage().write(apiConfig.userTokenExpiredKey, userTokenExpired);
     }
   }
 
-  core.int userTokenExpired() {
+  static core.int userTokenExpired() {
     if (apiConfig.userTokenExpiredKey.isNotEmpty) {
       return GetStorage().read(apiConfig.userTokenExpiredKey) ?? 0;
     }
@@ -72,13 +72,13 @@ class FYcStorages {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  void setIsFirstStartApp() async {
+  static void setIsFirstStartApp() async {
     if (apiConfig.isFirstStartAppKey.isNotEmpty) {
       await GetStorage().write(apiConfig.isFirstStartAppKey, true);
     }
   }
 
-  core.bool isFirstStartApp() {
+  static core.bool isFirstStartApp() {
     if (apiConfig.isFirstStartAppKey.isNotEmpty) {
       return GetStorage().read(apiConfig.isFirstStartAppKey) ?? false;
     }
@@ -86,13 +86,13 @@ class FYcStorages {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  void setUserInfo(FYcEntitysUser entitysUser) async {
+  static void setUserInfo(FYcEntitysUser entitysUser) async {
     if (apiConfig.userInfoKey.isNotEmpty) {
       await GetStorage().write(apiConfig.userInfoKey, entitysUser.toJson());
     }
   }
 
-  FYcEntitysUser userInfo() {
+  static FYcEntitysUser userInfo() {
     if (apiConfig.userInfoKey.isNotEmpty) {
       return FYcEntitysUser.fromJson(
           GetStorage().read(apiConfig.userInfoKey) ?? {});
@@ -100,13 +100,13 @@ class FYcStorages {
     return FYcEntitysUser.fromJson({});
   }
 
-  void setWalletInfo(FYcEntitysWallet entitysWallet) async {
+  static void setWalletInfo(FYcEntitysWallet entitysWallet) async {
     if (apiConfig.walletInfoKey.isNotEmpty) {
       await GetStorage().write(apiConfig.walletInfoKey, entitysWallet.toJson());
     }
   }
 
-  FYcEntitysWallet walletInfo() {
+  static FYcEntitysWallet walletInfo() {
     if (apiConfig.walletInfoKey.isNotEmpty) {
       return FYcEntitysWallet.fromJson(
           GetStorage().read(apiConfig.walletInfoKey) ?? {});
@@ -114,14 +114,14 @@ class FYcStorages {
     return FYcEntitysWallet.fromJson({});
   }
 
-  void setBehaviorInfo(FYcEntitysBehavior entitysBehavior) async {
+  static void setBehaviorInfo(FYcEntitysBehavior entitysBehavior) async {
     if (apiConfig.behaviorInfoKey.isNotEmpty) {
       await GetStorage()
           .write(apiConfig.behaviorInfoKey, entitysBehavior.toJson());
     }
   }
 
-  FYcEntitysBehavior behaviorInfo() {
+  static FYcEntitysBehavior behaviorInfo() {
     if (apiConfig.behaviorInfoKey.isNotEmpty) {
       return FYcEntitysBehavior.fromJson(
           GetStorage().read(apiConfig.behaviorInfoKey) ?? {});
@@ -130,14 +130,14 @@ class FYcStorages {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  void setRemoteConfig(FYcEntitysRemoteConfig remoteConfig) async {
+  static void setRemoteConfig(FYcEntitysRemoteConfig remoteConfig) async {
     if (apiConfig.remoteConfigKey.isNotEmpty) {
       await GetStorage()
           .write(apiConfig.remoteConfigKey, remoteConfig.toJson());
     }
   }
 
-  FYcEntitysRemoteConfig remoteConfig() {
+  static FYcEntitysRemoteConfig remoteConfig() {
     if (apiConfig.remoteConfigKey.isNotEmpty) {
       return FYcEntitysRemoteConfig.fromJson(
           GetStorage().read(apiConfig.remoteConfigKey) ?? {});
@@ -146,34 +146,34 @@ class FYcStorages {
   }
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  void setIsSignPrivacyPolicy() async {
+  static void setIsSignPrivacyPolicy() async {
     if (apiConfig.isSignPrivacyPolicyKey.isNotEmpty) {
       await GetStorage().write(apiConfig.isSignPrivacyPolicyKey, true);
     }
   }
 
-  core.bool isSignPrivacyPolicy() {
+  static core.bool isSignPrivacyPolicy() {
     if (apiConfig.isSignPrivacyPolicyKey.isNotEmpty) {
       return GetStorage().read(apiConfig.isSignPrivacyPolicyKey) ?? false;
     }
     return false;
   }
 
-  core.int lastRemoteConfigTimestamp() {
+  static core.int lastRemoteConfigTimestamp() {
     if (apiConfig.lastRemoteConfigTimestampKey.isNotEmpty) {
       return GetStorage().read(apiConfig.lastRemoteConfigTimestampKey) ?? 0;
     }
     return 0;
   }
 
-  void setLastRemoteConfigTimestamp() async {
+  static void setLastRemoteConfigTimestamp() async {
     if (apiConfig.lastRemoteConfigTimestampKey.isNotEmpty) {
       await GetStorage().write(apiConfig.lastRemoteConfigTimestampKey,
           core.DateTime.now().millisecondsSinceEpoch);
     }
   }
 
-  core.int lastInterstitialAdShowTimestamp() {
+  static core.int lastInterstitialAdShowTimestamp() {
     if (apiConfig.lastInterstitialAdShowTimestampKey.isNotEmpty) {
       return GetStorage().read(apiConfig.lastInterstitialAdShowTimestampKey) ??
           0;
@@ -181,21 +181,21 @@ class FYcStorages {
     return 0;
   }
 
-  void setLastInterstitialAdShowTimestamp() async {
+  static void setLastInterstitialAdShowTimestamp() async {
     if (apiConfig.lastInterstitialAdShowTimestampKey.isNotEmpty) {
       await GetStorage().write(apiConfig.lastInterstitialAdShowTimestampKey,
           core.DateTime.now().millisecondsSinceEpoch);
     }
   }
 
-  core.int lastRewardAdShowTimestamp() {
+  static core.int lastRewardAdShowTimestamp() {
     if (apiConfig.lastRewardAdShowTimestampKey.isNotEmpty) {
       return GetStorage().read(apiConfig.lastRewardAdShowTimestampKey) ?? 0;
     }
     return 0;
   }
 
-  void setLastRewardAdShowTimestamp() async {
+  static void setLastRewardAdShowTimestamp() async {
     if (apiConfig.lastRewardAdShowTimestampKey.isNotEmpty) {
       await GetStorage().write(apiConfig.lastRewardAdShowTimestampKey,
           core.DateTime.now().millisecondsSinceEpoch);
