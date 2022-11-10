@@ -1,8 +1,10 @@
 library f_yc_storages;
 
 import 'dart:core' as core;
+import 'dart:developer';
 import 'package:f_yc_config/f_yc_config.dart';
 import 'package:f_yc_entity/f_yc_entity.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get_storage/get_storage.dart';
 
 /// 初始化
@@ -41,6 +43,9 @@ class FYcStorages {
     }
     if (apiConfig.behaviorInfoKey.isNotEmpty) {
       await GetStorage().remove(apiConfig.behaviorInfoKey);
+    }
+    if (kDebugMode) {
+      log('----已清除登录信息----');
     }
   }
 
