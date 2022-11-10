@@ -1,5 +1,6 @@
 library f_yc_storages;
 
+import 'dart:async';
 import 'dart:core' as core;
 import 'dart:developer';
 import 'package:f_yc_config/f_yc_config.dart';
@@ -28,7 +29,7 @@ class FYcStorages {
     return false;
   }
 
-  static void cleanAllLoginInfo() async {
+  static Future<core.bool> cleanAllLoginInfo() async {
     if (apiConfig.userTokenKey.isNotEmpty) {
       await GetStorage().remove(apiConfig.userTokenKey);
     }
@@ -47,6 +48,7 @@ class FYcStorages {
     if (kDebugMode) {
       log('----已清除登录信息----');
     }
+    return true;
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -63,10 +65,13 @@ class FYcStorages {
     return "";
   }
 
-  static void setUserTokenExpired(core.int userTokenExpired) async {
+  static Future<core.bool> setUserTokenExpired(
+      core.int userTokenExpired) async {
     if (apiConfig.userTokenExpiredKey.isNotEmpty) {
       await GetStorage().write(apiConfig.userTokenExpiredKey, userTokenExpired);
+      return true;
     }
+    return false;
   }
 
   static core.int userTokenExpired() {
@@ -77,10 +82,12 @@ class FYcStorages {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  static void setIsFirstStartApp() async {
+  static Future<core.bool> setIsFirstStartApp() async {
     if (apiConfig.isFirstStartAppKey.isNotEmpty) {
       await GetStorage().write(apiConfig.isFirstStartAppKey, true);
+      return true;
     }
+    return false;
   }
 
   static core.bool isFirstStartApp() {
@@ -91,10 +98,12 @@ class FYcStorages {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  static void setUserInfo(FYcEntitysUser entitysUser) async {
+  static Future<core.bool> setUserInfo(FYcEntitysUser entitysUser) async {
     if (apiConfig.userInfoKey.isNotEmpty) {
       await GetStorage().write(apiConfig.userInfoKey, entitysUser.toJson());
+      return true;
     }
+    return false;
   }
 
   static FYcEntitysUser userInfo() {
@@ -105,10 +114,12 @@ class FYcStorages {
     return FYcEntitysUser.fromJson({});
   }
 
-  static void setWalletInfo(FYcEntitysWallet entitysWallet) async {
+  static Future<core.bool> setWalletInfo(FYcEntitysWallet entitysWallet) async {
     if (apiConfig.walletInfoKey.isNotEmpty) {
       await GetStorage().write(apiConfig.walletInfoKey, entitysWallet.toJson());
+      return true;
     }
+    return false;
   }
 
   static FYcEntitysWallet walletInfo() {
@@ -119,11 +130,14 @@ class FYcStorages {
     return FYcEntitysWallet.fromJson({});
   }
 
-  static void setBehaviorInfo(FYcEntitysBehavior entitysBehavior) async {
+  static Future<core.bool> setBehaviorInfo(
+      FYcEntitysBehavior entitysBehavior) async {
     if (apiConfig.behaviorInfoKey.isNotEmpty) {
       await GetStorage()
           .write(apiConfig.behaviorInfoKey, entitysBehavior.toJson());
+      return true;
     }
+    return false;
   }
 
   static FYcEntitysBehavior behaviorInfo() {
@@ -135,11 +149,14 @@ class FYcStorages {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  static void setRemoteConfig(FYcEntitysRemoteConfig remoteConfig) async {
+  static Future<core.bool> setRemoteConfig(
+      FYcEntitysRemoteConfig remoteConfig) async {
     if (apiConfig.remoteConfigKey.isNotEmpty) {
       await GetStorage()
           .write(apiConfig.remoteConfigKey, remoteConfig.toJson());
+      return true;
     }
+    return false;
   }
 
   static FYcEntitysRemoteConfig remoteConfig() {
@@ -151,10 +168,12 @@ class FYcStorages {
   }
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  static void setIsSignPrivacyPolicy() async {
+  static Future<core.bool> setIsSignPrivacyPolicy() async {
     if (apiConfig.isSignPrivacyPolicyKey.isNotEmpty) {
       await GetStorage().write(apiConfig.isSignPrivacyPolicyKey, true);
+      return true;
     }
+    return false;
   }
 
   static core.bool isSignPrivacyPolicy() {
@@ -171,11 +190,13 @@ class FYcStorages {
     return 0;
   }
 
-  static void setLastRemoteConfigTimestamp() async {
+  static Future<core.bool> setLastRemoteConfigTimestamp() async {
     if (apiConfig.lastRemoteConfigTimestampKey.isNotEmpty) {
       await GetStorage().write(apiConfig.lastRemoteConfigTimestampKey,
           core.DateTime.now().millisecondsSinceEpoch);
+      return true;
     }
+    return false;
   }
 
   static core.int lastInterstitialAdShowTimestamp() {
@@ -186,11 +207,13 @@ class FYcStorages {
     return 0;
   }
 
-  static void setLastInterstitialAdShowTimestamp() async {
+  static Future<core.bool> setLastInterstitialAdShowTimestamp() async {
     if (apiConfig.lastInterstitialAdShowTimestampKey.isNotEmpty) {
       await GetStorage().write(apiConfig.lastInterstitialAdShowTimestampKey,
           core.DateTime.now().millisecondsSinceEpoch);
+      return true;
     }
+    return false;
   }
 
   static core.int lastRewardAdShowTimestamp() {
@@ -200,11 +223,13 @@ class FYcStorages {
     return 0;
   }
 
-  static void setLastRewardAdShowTimestamp() async {
+  static Future<core.bool> setLastRewardAdShowTimestamp() async {
     if (apiConfig.lastRewardAdShowTimestampKey.isNotEmpty) {
       await GetStorage().write(apiConfig.lastRewardAdShowTimestampKey,
           core.DateTime.now().millisecondsSinceEpoch);
+      return true;
     }
+    return false;
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
