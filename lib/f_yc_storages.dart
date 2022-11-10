@@ -52,10 +52,12 @@ class FYcStorages {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  static void setUserToken(core.String userToken) async {
+  static Future<core.bool> setUserToken(core.String userToken) async {
     if (apiConfig.userTokenKey.isNotEmpty) {
       await GetStorage().write(apiConfig.userTokenKey, userToken);
+      return true;
     }
+    return false;
   }
 
   static core.String userToken() {
