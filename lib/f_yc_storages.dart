@@ -1,7 +1,6 @@
 library f_yc_storages;
 
-import 'dart:async';
-import 'dart:core' as core;
+import 'dart:core';
 import 'dart:developer';
 import 'package:f_yc_config/f_yc_config.dart';
 import 'package:f_yc_entity/f_yc_entity.dart';
@@ -18,18 +17,18 @@ class FYcStorages {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  static core.bool checkLogin() {
-    core.String userToken = FYcStorages.userToken();
-    core.int userTokenExpired = FYcStorages.userTokenExpired();
+  static bool checkLogin() {
+    String userToken = FYcStorages.userToken();
+    int userTokenExpired = FYcStorages.userTokenExpired();
     if (userToken.isNotEmpty && userTokenExpired != 0) {
-      if (core.DateTime.now().millisecondsSinceEpoch < userTokenExpired) {
+      if (DateTime.now().millisecondsSinceEpoch < userTokenExpired) {
         return true;
       }
     }
     return false;
   }
 
-  static Future<core.bool> cleanAllLoginInfo() async {
+  static Future<bool> cleanAllLoginInfo() async {
     if (apiConfig.userTokenKey.isNotEmpty) {
       await GetStorage().remove(apiConfig.userTokenKey);
     }
@@ -52,7 +51,7 @@ class FYcStorages {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  static Future<core.bool> setUserToken(core.String userToken) async {
+  static Future<bool> setUserToken(String userToken) async {
     if (apiConfig.userTokenKey.isNotEmpty) {
       await GetStorage().write(apiConfig.userTokenKey, userToken);
       return true;
@@ -60,15 +59,14 @@ class FYcStorages {
     return false;
   }
 
-  static core.String userToken() {
+  static String userToken() {
     if (apiConfig.userTokenKey.isNotEmpty) {
       return GetStorage().read(apiConfig.userTokenKey) ?? "";
     }
     return "";
   }
 
-  static Future<core.bool> setUserTokenExpired(
-      core.int userTokenExpired) async {
+  static Future<bool> setUserTokenExpired(int userTokenExpired) async {
     if (apiConfig.userTokenExpiredKey.isNotEmpty) {
       await GetStorage().write(apiConfig.userTokenExpiredKey, userTokenExpired);
       return true;
@@ -76,7 +74,7 @@ class FYcStorages {
     return false;
   }
 
-  static core.int userTokenExpired() {
+  static int userTokenExpired() {
     if (apiConfig.userTokenExpiredKey.isNotEmpty) {
       return GetStorage().read(apiConfig.userTokenExpiredKey) ?? 0;
     }
@@ -84,7 +82,7 @@ class FYcStorages {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  static Future<core.bool> setIsFirstStartApp() async {
+  static Future<bool> setIsFirstStartApp() async {
     if (apiConfig.isFirstStartAppKey.isNotEmpty) {
       await GetStorage().write(apiConfig.isFirstStartAppKey, true);
       return true;
@@ -92,7 +90,7 @@ class FYcStorages {
     return false;
   }
 
-  static core.bool isFirstStartApp() {
+  static bool isFirstStartApp() {
     if (apiConfig.isFirstStartAppKey.isNotEmpty) {
       return GetStorage().read(apiConfig.isFirstStartAppKey) ?? false;
     }
@@ -100,7 +98,7 @@ class FYcStorages {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  static Future<core.bool> setUserInfo(FYcEntitysUser entitysUser) async {
+  static Future<bool> setUserInfo(FYcEntitysUser entitysUser) async {
     if (apiConfig.userInfoKey.isNotEmpty) {
       await GetStorage().write(apiConfig.userInfoKey, entitysUser.toJson());
       return true;
@@ -116,7 +114,7 @@ class FYcStorages {
     return FYcEntitysUser.fromJson({});
   }
 
-  static Future<core.bool> setWalletInfo(FYcEntitysWallet entitysWallet) async {
+  static Future<bool> setWalletInfo(FYcEntitysWallet entitysWallet) async {
     if (apiConfig.walletInfoKey.isNotEmpty) {
       await GetStorage().write(apiConfig.walletInfoKey, entitysWallet.toJson());
       return true;
@@ -132,7 +130,7 @@ class FYcStorages {
     return FYcEntitysWallet.fromJson({});
   }
 
-  static Future<core.bool> setBehaviorInfo(
+  static Future<bool> setBehaviorInfo(
       FYcEntitysBehavior entitysBehavior) async {
     if (apiConfig.behaviorInfoKey.isNotEmpty) {
       await GetStorage()
@@ -151,7 +149,7 @@ class FYcStorages {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  static Future<core.bool> setRemoteConfig(
+  static Future<bool> setRemoteConfig(
       FYcEntitysRemoteConfig remoteConfig) async {
     if (apiConfig.remoteConfigKey.isNotEmpty) {
       await GetStorage()
@@ -170,7 +168,7 @@ class FYcStorages {
   }
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  static Future<core.bool> setIsSignPrivacyPolicy() async {
+  static Future<bool> setIsSignPrivacyPolicy() async {
     if (apiConfig.isSignPrivacyPolicyKey.isNotEmpty) {
       await GetStorage().write(apiConfig.isSignPrivacyPolicyKey, true);
       return true;
@@ -178,30 +176,30 @@ class FYcStorages {
     return false;
   }
 
-  static core.bool isSignPrivacyPolicy() {
+  static bool isSignPrivacyPolicy() {
     if (apiConfig.isSignPrivacyPolicyKey.isNotEmpty) {
       return GetStorage().read(apiConfig.isSignPrivacyPolicyKey) ?? false;
     }
     return false;
   }
 
-  static core.int lastRemoteConfigTimestamp() {
+  static int lastRemoteConfigTimestamp() {
     if (apiConfig.lastRemoteConfigTimestampKey.isNotEmpty) {
       return GetStorage().read(apiConfig.lastRemoteConfigTimestampKey) ?? 0;
     }
     return 0;
   }
 
-  static Future<core.bool> setLastRemoteConfigTimestamp() async {
+  static Future<bool> setLastRemoteConfigTimestamp() async {
     if (apiConfig.lastRemoteConfigTimestampKey.isNotEmpty) {
       await GetStorage().write(apiConfig.lastRemoteConfigTimestampKey,
-          core.DateTime.now().millisecondsSinceEpoch);
+          DateTime.now().millisecondsSinceEpoch);
       return true;
     }
     return false;
   }
 
-  static core.int lastInterstitialAdShowTimestamp() {
+  static int lastInterstitialAdShowTimestamp() {
     if (apiConfig.lastInterstitialAdShowTimestampKey.isNotEmpty) {
       return GetStorage().read(apiConfig.lastInterstitialAdShowTimestampKey) ??
           0;
@@ -209,26 +207,54 @@ class FYcStorages {
     return 0;
   }
 
-  static Future<core.bool> setLastInterstitialAdShowTimestamp() async {
+  static Future<bool> setLastInterstitialAdShowTimestamp() async {
     if (apiConfig.lastInterstitialAdShowTimestampKey.isNotEmpty) {
       await GetStorage().write(apiConfig.lastInterstitialAdShowTimestampKey,
-          core.DateTime.now().millisecondsSinceEpoch);
+          DateTime.now().millisecondsSinceEpoch);
       return true;
     }
     return false;
   }
 
-  static core.int lastRewardAdShowTimestamp() {
+  static bool isInterstitialAdEnableShow() {
+    int lastInterstitialAdShowTimestamp =
+        FYcStorages.lastInterstitialAdShowTimestamp();
+    int diffMs = (DateTime.now().millisecondsSinceEpoch -
+            lastInterstitialAdShowTimestamp)
+        .abs();
+    FYcEntitysRemoteConfig entitysRemoteConfig = remoteConfig();
+    int interstitialAdIntervalSec =
+        entitysRemoteConfig.ad!.interstitialAdIntervalSec!;
+    if (diffMs > interstitialAdIntervalSec * 1000) {
+      return true;
+    }
+    return false;
+  }
+
+  static int lastRewardAdShowTimestamp() {
     if (apiConfig.lastRewardAdShowTimestampKey.isNotEmpty) {
       return GetStorage().read(apiConfig.lastRewardAdShowTimestampKey) ?? 0;
     }
     return 0;
   }
 
-  static Future<core.bool> setLastRewardAdShowTimestamp() async {
+  static Future<bool> setLastRewardAdShowTimestamp() async {
     if (apiConfig.lastRewardAdShowTimestampKey.isNotEmpty) {
       await GetStorage().write(apiConfig.lastRewardAdShowTimestampKey,
-          core.DateTime.now().millisecondsSinceEpoch);
+          DateTime.now().millisecondsSinceEpoch);
+      return true;
+    }
+    return false;
+  }
+
+  static bool isRewardAdEnableShow() {
+    int lastRewardAdShowTimestamp = FYcStorages.lastRewardAdShowTimestamp();
+    int diffMs =
+        (DateTime.now().millisecondsSinceEpoch - lastRewardAdShowTimestamp)
+            .abs();
+    FYcEntitysRemoteConfig entitysRemoteConfig = remoteConfig();
+    int rewardAdIntervalSec = entitysRemoteConfig.ad!.rewardAdIntervalSec!;
+    if (diffMs > rewardAdIntervalSec * 1000) {
       return true;
     }
     return false;
