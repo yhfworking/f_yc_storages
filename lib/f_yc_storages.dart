@@ -98,9 +98,9 @@ class FYcStorages {
     return false;
   }
 
-  static Future<bool> setRewardAmount() async {
+  static Future<bool> setRewardAmount(int amount) async {
     if (storagesConfig.rewardAmountKey.isNotEmpty) {
-      await GetStorage().write(storagesConfig.rewardAmountKey, true);
+      await GetStorage().write(storagesConfig.rewardAmountKey, amount);
       return true;
     }
     return false;
