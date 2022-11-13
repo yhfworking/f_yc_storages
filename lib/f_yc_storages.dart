@@ -106,11 +106,11 @@ class FYcStorages {
     return false;
   }
 
-  static bool rewardAmount() {
+  static int rewardAmount() {
     if (storagesConfig.rewardAmountKey.isNotEmpty) {
-      return GetStorage().read(storagesConfig.rewardAmountKey) ?? false;
+      return GetStorage().read(storagesConfig.rewardAmountKey) ?? 0;
     }
-    return false;
+    return 0;
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
